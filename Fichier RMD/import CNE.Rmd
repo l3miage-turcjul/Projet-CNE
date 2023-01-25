@@ -1,0 +1,423 @@
+---
+title: "import CNE"
+author: "Julien TURC"
+date: "10/02/2020"
+output: word_document
+---
+
+```{r}
+for (comp in 2:128){
+name1<-("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie ")
+name2<-(".csv")
+namedef<-paste(name1,comp,name2,sep="")
+
+}
+namedef
+```
+
+
+```{r}
+name1<-("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie ")
+name2<-(".csv")
+namedef<-paste(name1,2,name2,sep="")
+namedef
+```
+
+
+```{r}
+library(readr)
+fichier1 <- read.csv2("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie 1.csv", header = TRUE,
+    sep = ";",dec = ",", encoding = "WINDOWS-1252")
+View(fichier1)
+
+for (comp in 2:128){
+library(readr)
+name1<-("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie ")
+name2<-(".csv")
+#namedef<-cat(name1,comp,name2)
+#namedef
+
+fichier2 <-read.csv2(namedef<-paste(name1,comp,name2,sep=""), header = TRUE,
+    sep = ";",dec = ",", encoding = "WINDOWS-1252")
+View(fichier2)
+
+fichier1<-rbind(fichier1,fichier2)
+}
+```
+
+```{r}
+save(fichier1,file="CNE.Rda")
+```
+
+```{r}
+test<-donnees
+#colnames(test)
+names(test)[names(test) == "Date" ] <- "1.date"
+colnames(test)
+#1er test pour renomer les colones, méthode trop longue
+```
+
+
+```{r}
+names(test)<-c("1.date","2.statut","3.achats","4.criteres_achats","5.remise_cause","6.raison1","7.raison2","8.obstacle1","9.obstacle2","10.habitude_occasion","11.habitude_louer","12.habitude_donner","13.habitude_revendre","14.habitude_troc","15.habitude_reparer","16.habitude_fabriquer","17.habitude_vrac","18.alim_bio","19.alim_local","20.alim_saison","21.alim_moins_viande","22.alim_stop_viande","23.alim_moins_animale","24.alim_stop_animale","25.alim_remuneration","26.engagement_asso","27.difficulte_engager","28.changement_clim","29.responsable_degats","30.sentiment_changementclim","31.medias","32.medias_avis","33.echelle_decisions","34.decisions_genfut","35.contrainte_sanctions","36.odd","37.odd_societe","38.mesures_campus","39.etab_change","40.acteurs_campus","41.etab_attrac","42.formation_envt","43.formation_enjx","44.Sentim_informe","45.cursus_envt","46.davantage_informe","47.metiers","48.decisions","49.recherche_emploi","50.genre","51.nationalite","52.age","53.situation","54.activite","55.csp1","56.csp2","57.boursier","58.type_etab","59.univ","60.ecole_inge","61.ecole_commerce","62.iep","63.etab_nom","64.filiere","65.connaissance")
+#méthode bien plus courte et qui as été utilisé par la professeur.
+```
+
+```{r}
+names(donnees)<-c("1.date","2.statut","3.achats","4.criteres_achats","5.remise_cause","6.raison1","7.raison2","8.obstacle1","9.obstacle2","10.habitude_occasion","11.habitude_louer","12.habitude_donner","13.habitude_revendre","14.habitude_troc","15.habitude_reparer","16.habitude_fabriquer","17.habitude_vrac","18.alim_bio","19.alim_local","20.alim_saison","21.alim_moins_viande","22.alim_stop_viande","23.alim_moins_animale","24.alim_stop_animale","25.alim_remuneration","26.engagement_asso","27.difficulte_engager","28.changement_clim","29.responsable_degats","30.sentiment_changementclim","31.medias","32.medias_avis","33.echelle_decisions","34.decisions_genfut","35.contrainte_sanctions","36.odd","37.odd_societe","38.mesures_campus","39.etab_change","40.acteurs_campus","41.etab_attrac","42.formation_envt","43.formation_enjx","44.Sentim_informe","45.cursus_envt","46.davantage_informe","47.metiers","48.decisions","49.recherche_emploi","50.genre","51.nationalite","52.age","53.situation","54.activite","55.csp1","56.csp2","57.boursier","58.type_etab","59.univ","60.ecole_inge","61.ecole_commerce","62.iep","63.etab_nom","64.filiere","65.connaissance")
+save(donnees,file="CNE.Rda")
+```
+
+```{r}
+head(donnees,5)
+tail(donnees,5)
+```
+
+
+```{r}
+summary(test)
+```
+
+
+
+```{r}
+test[5 == "" ] <- "1.date"
+#bonne idée, mais pas bonne structure
+```
+
+
+```{r}
+library(TIDYR)
+test2<-filter(test,("22"))
+test2
+#inutile
+```
+
+
+```{r}
+library(stringr)
+```
+
+
+
+```{r}
+#On enlève les occurence ou la case boursier n'est pas renseigné
+id<-which(test[,"57.boursier"]=="")#on colecte les lignes dans ID
+test2<-test[-id,]#on supprime les ID inutiles
+#on ne garde que les étudiants
+id<-which(test2[,"2.statut"]!="Etudiant(e) (dont Apprenti(e), césure, doctorat...)")
+test3<-test2[-id,]
+#On retire les genres autres
+id<-which(test5[,"50.genre"]!="Femme" & test5[,"50.genre"]!="Homme")
+id
+#print(test5[,"50.genre"]!="Femme"& test5[,"50.genre"]!="Homme")
+#qua<-test5[-id,]
+hehe<-test3[id,]
+test4<-test3
+#On met tous les genre autres en autre
+test5[id,"50.genre"]<-"Autre"
+#on met en autre les autre type d'tablissement
+id<-which(test3[,"58.type_etab"]!="A l'Université (hors IUT et école d'ingénieurs interne)"& test3[,"58.type_etab"]!="En BTS"& test3[,"58.type_etab"]!="En IUT"& test3[,"58.type_etab"]!="En CPGE (classe préparatoire aux grandes écoles)"& test3[,"58.type_etab"]!="En Ecole d'ingénieurs"& test3[,"58.type_etab"]!="En Ecole de commerce"& test3[,"58.type_etab"]!="Dans un IEP (instituts d'études politiques)"& test3[,"58.type_etab"]!="Lycée"& test3[,"58.type_etab"]!="Autre")
+test4[id,"58.type_etab"]<-"Autre"
+id<-which(test4[,"53.situation"]!="Seul(e)"& test4[,"53.situation"]!="En colocation / En couple"& test4[,"53.situation"]!="Chez tes parents"& test4[,"53.situation"]!="En internat/Résidence étudiante"& test4[,"53.situation"]!="Autre")
+test4[id,"53.situation"]<-"Autre"
+
+#test5$"4.criteres_achats.1"<-
+#Cette structure marche particulièrement bien
+# nomdelaBD[nbligne,nbcol]
+```
+
+
+```{r}
+#On traite ici tous les choix multiples de la question 1 !
+#install.packages("stringr")
+#library(stringr)
+#les deux lignes au dessus était faites pour le premier lancement.
+test5<-test4
+idtest<-str_detect(test4[,"4.criteres_achats"], "Le prix abordable")
+test5[idtest,"4.criteres_achats.1"]<-"Le prix abordable"
+idtest<-str_detect(test4[,"4.criteres_achats"], "La proximité du point de vente")
+test5[idtest,"4.criteres_achats.2"]<-"La proximité du point de vente"
+idtest<-str_detect(test4[,"4.criteres_achats"], "L'impact social du produit")
+#idtest
+test5[idtest,"4.criteres_achats.3"]<-"L'impact social du produit (commerce équitable)"
+idtest<-str_detect(test4[,"4.criteres_achats"],"L'impact environnemental du produit")
+test5[idtest,"4.criteres_achats.4"]<-"L'impact environnemental du produit (provenance, mode de production saisonnalité)"
+idtest<-str_detect(test4[,"4.criteres_achats"], "L'habitude")
+test5[idtest,"4.criteres_achats.5"]<-"L'habitude"
+idtest<-str_detect(test4[,"4.criteres_achats"], "La qualité")
+test5[idtest,"4.criteres_achats.6"]<-"La qualité"
+idtest<-str_detect(test4[,"4.criteres_achats"], "L'impact sur la santé")
+test5[idtest,"4.criteres_achats.7"]<-"L'impact sur la santé"
+idtest<-str_detect(test4[,"4.criteres_achats"], "Je ne sais pas")
+test5[idtest,"4.criteres_achats.8"]<-"Je ne sais pas"
+```
+
+
+```{r}
+#Je vais traiter ici les choix multiple de la question 8
+idtest<-str_detect(test4[,"8.obstacle1"], "Le prix")
+test5[idtest,"8.obstacle1.1"]<-"Le prix (trop cher)"
+idtest<-str_detect(test4[,"8.obstacle1"], "L'éloignement du point de vente")
+test5[idtest,"8.obstacle1.2"]<-"L'éloignement du point de vente"
+idtest<-str_detect(test4[,"8.obstacle1"], "Le manque d'information")
+#idtest
+test5[idtest,"8.obstacle1.3"]<-"Le manque d'information"
+idtest<-str_detect(test4[,"8.obstacle1"],"Le manque d'alternative")
+test5[idtest,"8.obstacle1.4"]<-"Le manque d'alternative"
+idtest<-str_detect(test4[,"8.obstacle1"], "Je ne rencontre pas d'obstacle")
+test5[idtest,"8.obstacle1.5"]<-"Je ne rencontre pas d'obstacle"
+idtest<-str_detect(test4[,"8.obstacle1"],"Je ne cherche pas à modifier mes habitudes")
+test5[idtest,"8.obstacle1.6"]<-"Je ne cherche pas à modifier mes habitudes"
+```
+
+```{r}
+#séparation des réponses à la question 9
+idtest<-str_detect(test4[,"9.obstacle2"], "Le prix")
+test5[idtest,"9.obstacle2.1"]<-"Le prix (trop cher)"
+idtest<-str_detect(test4[,"9.obstacle2"], "L'éloignement du point de vente")
+test5[idtest,"9.obstacle2.2"]<-"L'éloignement du point de vente"
+idtest<-str_detect(test4[,"9.obstacle2"], "Le manque d'information")
+test5[idtest,"9.obstacle2.3"]<-"Le manque d'information"
+idtest<-str_detect(test4[,"9.obstacle2"],"Le manque d'alternative")
+test5[idtest,"9.obstacle2.4"]<-"Le manque d'alternative"
+idtest<-str_detect(test4[,"9.obstacle2"], "Je ne rencontre pas d'obstacle")
+test5[idtest,"9.obstacle2.5"]<-"Je ne rencontre pas d'obstacle"
+testsave<-test5
+```
+
+
+
+```{r}
+#Séparation des réponses à la question 38
+idtest<-str_detect(test4[,"38.mesures_campus"], "Mettre en place des actions de sensibilisation aux enjeux environnementaux")
+test5[idtest,"38.mesures_campus.1"]<-"Mettre en place des actions de sensibilisation aux enjeux environnementaux"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Effectuer ou améliorer le tri sélectif")
+test5[idtest,"38.mesures_campus.2"]<-"Effectuer ou améliorer le tri sélectif"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Adopter une politique d'achat responsable")
+#idtest
+test5[idtest,"38.mesures_campus.3"]<-"Adopter une politique d'achat responsable (réduction des emballages, made in France, produits recyclés/recyclables, entreprise d'insertion, etc.)"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Favoriser les modes de transports alternatifs")
+#idtest
+test5[idtest,"38.mesures_campus.4"]<-"Favoriser les modes de transports alternatifs (covoiturage, transports en commun,  vélo,etc.)"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Protéger et mettre en valeur la biodiversité du campus")
+test5[idtest,"38.mesures_campus.5"]<-"Protéger et mettre en valeur la biodiversité du campus"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Rénover les bâtiments pour réduire leurs impacts environnementaux")
+test5[idtest,"38.mesures_campus.6"]<-"Rénover les bâtiments pour réduire leurs impacts environnementaux"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Adopter une charte de partenariats responsables")
+test5[idtest,"38.mesures_campus.7"]<-"Adopter une charte de partenariats responsables (financiers, professionnels...)"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Mon établissement est déjà suffisamment engagé")
+test5[idtest,"38.mesures_campus.8"]<-"Mon établissement est déjà suffisamment engagé"
+idtest<-str_detect(test4[,"38.mesures_campus"],"Aucune")
+test5[idtest,"38.mesures_campus.9"]<-"Aucune"
+testsave<-test5
+```
+
+
+```{r}
+#Séparation des réponses à la question 39
+idtest<-str_detect(test5[,"39.etab_change"],"Proposer quotidiennement des options végétariennes")
+test5[idtest,"39.etab_change.1"]<-"Proposer quotidiennement des options végétariennes* voire végétaliennes**"
+idtest<-str_detect(test5[,"39.etab_change"],"Bannir les couverts, assiettes et verres jetables")
+test5[idtest,"39.etab_change.2"]<-"Bannir les couverts, assiettes et verres jetables"
+idtest<-str_detect(test5[,"39.etab_change"],"Trier les déchets")
+test5[idtest,"39.etab_change.3"]<-"Trier les déchets"
+idtest<-str_detect(test5[,"39.etab_change"],"Composter les déchets organiques")
+test5[idtest,"39.etab_change.4"]<-"Composter les déchets organiques"
+idtest<-str_detect(test5[,"39.etab_change"],"Proposer des produits de saison, biologiques et/ou locaux")
+test5[idtest,"39.etab_change.5"]<-"Proposer des produits de saison, biologiques et/ou locaux"
+idtest<-str_detect(test5[,"39.etab_change"],"Proposer moins de produits industriels")
+
+test5[idtest,"39.etab_change.6"]<-"Proposer moins de produits industriels (plats préparés et emballés)"
+idtest<-str_detect(test5[,"39.etab_change"],"Aucune de ces propositions")
+
+test5[idtest,"39.etab_change.7"]<-"Aucune de ces propositions"
+idtest<-str_detect(test5[,"39.etab_change"],"Je ne sais pas")
+test5[idtest,"39.etab_change.8"]<-"Je ne sais pas"
+testsave<-test5
+```
+
+
+```{r}
+#Séparation des réponses à la question 40
+idtest<-str_detect(test5[,"40.acteurs_campus"],"La direction et/ou l'administration")
+
+test5[idtest,"40.acteurs_campus.1"]<-"La direction et/ou l'administration"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Les enseignant")
+
+test5[idtest,"40.acteurs_campus.2"]<-"Les enseignant(e)s/chercheurs(euses)"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Les étudiant")
+
+test5[idtest,"40.acteurs_campus.3"]<-"Les étudiant(e)s"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Les associations étudiantes")
+test5[idtest,"40.acteurs_campus.4"]<-"Les associations étudiantes"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Les représentant")
+
+test5[idtest,"40.acteurs_campus.5"]<-"Les représentant(e)s étudiant(e)s (syndicats, élus)"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Aucun")
+
+test5[idtest,"40.acteurs_campus.6"]<-"Aucun(e)"
+idtest<-str_detect(test5[,"40.acteurs_campus"],"Je ne sais pas")
+test5[idtest,"40.acteurs_campus.7"]<-"Je ne sais pas"
+testsave<-test5
+```
+
+
+
+
+
+```{r}
+#passer l'age en chiffre
+test6<-test5
+library(stringr)
+str_replace(test6[,"52age"],"+0i","")
+str_replace_all(test6[,"52age"], pattern = "+0i", replacement = "")
+```
+
+
+
+
+```{r}
+print(test[["57.boursier"]]=="")
+#print(id)
+#Test permettant de voir ce que donne les commandes
+```
+
+```{r}
+#savoir si on peut garder qu'étudiant
+id<-which(test2[,"2.statut"]!="Etudiant")
+id
+test4<-test2[-id,]
+#donc non
+id<-which(test5[,"2.statut"]!="Etudiant")
+```
+
+
+```{r}
+#inutile car n'a jamais marché
+id<-which(test[,"57.boursier"]=="")
+test4<-test[-id,]
+lst<-c("Française","Français","France","Francais","Francaise","FRANCE","FR")
+id<-which(test4[["51.nationalite"]]=="Française"|test4[["51.nationalite"]]=="Français")
+id
+#test4[id,]<-"FR"
+#test4[test4==c("Française","Français","France","Francais","Francaise","FRANCE","FR")]<-"FR"
+```
+
+
+
+
+```{r}
+#ici, on enlève les réponse autre et on met "autres" (ne marche pas et ne pas executer, merci)
+testsave<-test5
+#test6<-test5
+#test6[,"27.difficulte_engager"]<-as.character(test6[,"27.difficulte_engager"])
+#test6[,"27.difficulte_engager"]<-as.factor(test6[,"27.difficulte_engager"])
+id1<-which(test5[,"27.difficulte_engager"]!="Le manque d'initiative autour de moi"&test5[,"27.difficulte_engager"]!="Le manque d'information sur les initiatives existantes"&test5[,"27.difficulte_engager"]!="Le manque de temps"&test5[,"27.difficulte_engager"]!="Je ne souhaite pas m'engager")
+id1
+
+
+#tentative de l'agrégation de deux liste !
+#tblb<-c(1:47101)
+#fnix<-tblb-(tblb*id2)
+#fnix
+#for (comp in id1) {
+#  if ((fnix[comp])!=0) {}}
+
+
+#on va transformer j'agis sans difficulté en j agis sans difficulté !
+#ne marche pas car la colone est en factor !
+id2<-str_detect(test5[,"27.difficulte_engager"],"agis déjà sans difficulté")
+stk<-levels(test5[3,"27.difficulte_engager"])
+#liste de tous les levels du factor.
+test6[3,"27.difficulte_engager"]<-"O"
+
+
+#testons des choses avec factor !
+test6[,"27.difficulte_engager"]<-factor(test5[,"27.difficulte_engager"],levels = c("Le manque d'initiative autour de moi","Le manque d'information sur les initiatives existantes","Le manque de temps","Je ne souhaite pas m'engager","Jagis déjà sans difficulté","Autre"))
+id1
+levels(test6[,"27.difficulte_engager"])
+```
+
+
+
+
+
+
+```{r}
+write.csv2(x =BDfinal, file =file.choose())
+
+```
+
+
+
+
+
+```{r}
+levels(test5[,"52age"])
+test5<-test5[-13306,]
+levels(test5[,"58.type_etab"])
+```
+
+
+
+```{r}
+#suppression des valeurs erratiques pour l'age et moins de 15 ans
+suppr<-c(519,849,2127,2783,4148,6104,7819,7971,8148,8525,9687,13937,16593,19722,19891,22367,22724,29506,31010,31568,32265,33422,33990,35619,35943,36288,36651,36898,37102,39278,39443,39951,41518,41554,42693,42926,43555,44139,44432,47042)
+test6[suppr,"52age"]
+test7<-test6
+test7<-test7[-suppr,]
+```
+
+
+```{r}
+#supression des valeurs erratiques pour type établissement
+test7[9046,"58.type_etab"]
+#Supression des valeurs buggés
+test7[40637,"3.achats"]
+test7[7791,"10.habitude_occasion"]
+suppr2<-c(7791,40637)
+test7<-test7[-suppr2,]
+
+```
+
+
+
+```{r}
+#suppression des personne ayant moins de 17 ans
+suppr3<-c(341, 917, 2259, 3403, 3506, 4924, 5246, 7943, 9450, 9500, 9527, 9968,28181,28356,28728,29614,29700,31488,32336,33973, 34071,34982,35271,35846,36587,36703,37724,39228,41868,41976,42121,43071,44026,44673,45507)
+test7[suppr3,"52age"]
+test7<-test7[-suppr3,]
+testsave2<-test7
+```
+
+
+
+
+```{r}
+#on supprime les valeurs non concordantes des questions filtres. Pour cela
+test7[103,"6.raison1"]
+test7[103,"5.remise_cause"]
+test7[35468,"28.changement_clim"]
+test7[35468,"30.sentiment_changementclim"]
+suppr4<-c(103,9204,16176,43087,44312,45640)
+test7[suppr4,"5.remise_cause"]
+test7[suppr4,"6.raison1"]
+suppr5<-c(1393,2356,2726,3193,13439,23501,23706,30399,35468,37066,37446,37970,39642,42638,45836)
+test7[suppr5,"5.remise_cause"]
+test7[suppr5,"7.raison2"]
+suppr6<-c(4841,5586,6363,7635,7957,8222,8257,9334,11643,14218,17259,17283,23746,31885,36773,37376,42467,43471,43902,45787)
+test7[suppr6,"28.changement_clim"]
+test7[suppr6,"29.responsable_degats"]
+suppr7<-c(18114,19359,39438)
+test7[suppr7,"36.odd"]
+test7[suppr7,"37.odd_societe"]
+suppr8<-c(2286,2440,4222,4397,4704,8756,8936,9958,13861,19105,20366,20709,23028,23172,24294,25055,25106,28865,30083,32409,32505,34281,34568,35346,35392,35588,39082,39386,39726,41115,41648,41718,44744,45743,45889,46584,46716)
+test7[suppr8,"42.formation_envt"]
+test7[suppr8,"43.formation_enjx"]
+suppr9<-c(103,9204,16176,43087,44312,45640,1393,2356,2726,3193,13439,23501,23706,30399,35468,37066,37446,37970,39642,42638,45836,4841,5586,6363,7635,7957,8222,8257,9334,11643,14218,17259,17283,23746,31885,36773,37376,42467,43471,43902,45787,18114,19359,39438,2286,2440,4222,4397,4704,8756,8936,9958,13861,19105,20366,20709,23028,23172,24294,25055,25106,28865,30083,32409,32505,34281,34568,35346,35392,35588,39082,39386,39726,41115,41648,41718,44744,45743,45889,46584,46716)
+test7<-test7[-suppr9,]
+testsave3<-test7
+BDfinal<-test7
+```
+

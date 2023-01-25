@@ -1,0 +1,16 @@
+---
+title: "nettoyage des données"
+author: "Julien TURC"
+date: "10/04/2020"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+
+
+
+
+```{r}
+names(test)<-c("1.date","2.statut","3.achats","4.criteres_achats","5.remise_cause","6.raison1","7.raison2","8.obstacle1","9.obstacle2","10.habitude_occasion","11.habitude_louer","12.habitude_donner","13.habitude_revendre","14.habitude_troc","15.habitude_reparer","16.habitude_fabriquer","17.habitude_vrac","18.alim_bio","19.alim_local","20.alim_saison","21.alim_moins_viande","22.alim_stop_viande","23.alim_moins_animale","24.alim_stop_animale","25.alim_remuneration","26.engagement_asso","27.difficulte_engager","28.changement_clim","29.responsable_degats","30.sentiment_changementclim","31.medias","32.medias_avis","33.echelle_decisions","34.decisions_genfut","35.contrainte_sanctions","36.odd","37.odd_societe","38.mesures_campus","39.etab_change","40.acteurs_campus","41.etab_attrac","42.formation_envt","43.formation_enjx","44.Sentim_informe","45.cursus_envt","46.davantage_informe","47.metiers","48.decisions","49.recherche_emploi","50.genre","51.nationalite","52.age","53.situation","54.activite","55.csp1","56.csp2","57.boursier","58.type_etab","59.univ","60.ecole_inge","61.ecole_commerce","62.iep","63.etab_nom","64.filiere","65.connaissance")
+```

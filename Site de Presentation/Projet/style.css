@@ -1,0 +1,95 @@
+.fond {
+  background-color:Ivory;
+}
+
+h1 {
+	font-family: verdana;
+	text-align: left;
+  
+}
+
+h2	{
+	font-family:Verdana;
+    color:white;
+    text-align:left;
+	text-decoration: underline;
+}
+
+.corps{
+	font-family:Lucida Sans Unicode;
+	
+	
+}
+
+.button:link{
+	background-color: MediumSlateBlue;
+	color: white;
+	text-align: center;
+	border-radius: 1%;
+	padding: 15px;
+	
+}
+
+.button:visited{
+	background-color:DarkOrchid;
+	color: white;
+	
+}
+
+.button:hover {
+  background-color:MediumPurple;
+}
+
+.button:active{
+	background-color:SlateBlue;
+	
+}
+
+.art{
+	background-color: palegreen;
+	padding: 2.5%;
+	margin:1%;
+	border-radius: 2%;
+	
+}
+
+.men{
+	background-color:MediumAquaMarine;
+	padding: 2.5%;
+	margin:1%;
+	border-radius: 2%;
+	
+}
+
+.corps{
+	text-align: justify;
+	font-family : verdana;
+	
+}
+
+.cot{
+	background-color: MediumAquaMarine;
+	border-radius: 0.9%;
+	margin:1%;
+	margin-left: 2.5%;
+	padding: 1.5%;
+}
+
+.pied{
+	border-style: double;
+	margin-top: 1%;
+
+}
+
+
+.basp{
+	font-size: 80%;
+	text-align: left;
+	font-family:Times New Roman;
+}
+
+.bast{
+	font-size: 100%;
+	font-family:Times New Roman;
+}
+

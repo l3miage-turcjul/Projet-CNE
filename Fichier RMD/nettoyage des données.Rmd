@@ -1,0 +1,28 @@
+---
+title: "nettoyage des données"
+author: "Julien TURC"
+date: "10/04/2020"
+output: word_document
+---
+
+
+```{r}
+library(readr)
+fichier1 <- read.csv2("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie 1.csv", header = TRUE,
+    sep = ";",dec = ",", encoding = "WINDOWS-1252")
+View(fichier1)
+
+for (comp in 2:128){
+library(readr)
+name1<-("E:/Fichiers Source Bureau/projet tutoré/Données CNE/data/Extraction partie ")
+name2<-(".csv")
+#namedef<-cat(name1,comp,name2)
+#namedef
+
+fichier2 <-read.csv2(namedef<-paste(name1,comp,name2,sep=""), header = TRUE,
+    sep = ";",dec = ",", encoding = "WINDOWS-1252")
+#View(fichier2)
+
+fichier1<-rbind(fichier1,fichier2)
+}
+```
